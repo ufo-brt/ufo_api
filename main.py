@@ -1,27 +1,40 @@
-from typing import Union
-
-from fastapi import FastAPI
+from datetime import datetime
+from typing import Union,Text,Optional
+from fastapi import FastAPI,HTTPException
 from pydantic import BaseModel
-
+from datetime import datetime
+from uuid import uuid4 as uuid
 app = FastAPI()
 
+ufos_array=[]
 
-class Item(BaseModel):
-    name: str
-    price: float
+class Ufo(BaseModel):
+    id:Optional[str]
+    location_ufo:str
+    description: Text
     is_offer: Union[bool, None] = None
+    created_at:datetime=datetime.now()
+    published_at:Optional[datetime]
+    published:bool=False
 
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Wecome": "Welcome to my rest API"}
 
+@app.get("/ufos")
+def get_ufos():
+    return ufos_array
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@app.post("/ufos")
+def save_ufos(ufos:Ufo):
+    ufos.id=str(uuid())
+    ufos_array.append(ufos.dict())
+    return ufos
 
-
-@app.put("/items/{item_id}")
-def update_item(item_id: int, item: Item):
-    return {"item_name": item.name, "item_id": item_id}
+@app.get('/ufos/{ufos_id}')
+def get_ufos(ufos_id:str):
+    for ufo in ufos_array:
+        if ufo['id']==ufos_id:
+            return ufo
+    raise HTTPException(status_code=404.,detail="Post Not Found")
