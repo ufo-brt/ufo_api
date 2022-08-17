@@ -1,17 +1,16 @@
 from fastapi import APIRouter,HTTPException
-from datetime import datetime
-from typing import Union,Text,Optional
+from config.db import conn
+from schemas.ufo import ufoEntity,ufosEntity
+from models.ufos import Ufo
 from uuid import uuid4 as uuid
 
+
 ufo=APIRouter()
+
 ufos_array=[]
 
 @ufo.get("/ufos")
-def get_ufos():
-    return ufos_array
-
-@ufo.get("/ufos")
-def get_ufos():
+def get_all_ufos():
     return ufos_array
 
 @ufo.post("/ufos")
@@ -20,18 +19,18 @@ def save_ufos(ufos:Ufo):
     ufos_array.append(ufos.dict())
     return ufos
 
-@ufo.get('/ufos/{ufos_id}')
-def get_ufos(ufos_id:str):
+@ufo.get('/ufos/{ufo_id}')
+def get_ufo(ufo_id:str):
     for ufo in ufos_array:
-        if ufo['id']==ufos_id:
+        if ufo['id']==ufo_id:
             return ufo
     raise HTTPException(status_code=404.,detail="Ufo Not Found")
 
 
 @ufo.delete("/ufos/{ufos_id}")
-def delete_ufo(ufos_id:str):
+def delete_ufo(ufo_id:str):
     for index,ufo in enumerate(ufos_array):
-        if ufo["id"]==ufos_id:
+        if ufo["id"]==ufo_id:
             ufos_array.pop(index)
             return {"message": "Ufo has been deleted successfully"}
 
