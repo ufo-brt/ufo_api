@@ -4,15 +4,14 @@ from pydantic import BaseModel
 from datetime import datetime
 from routes.ufos import ufo
 from uuid import uuid4 as uuid
+from docs import tags_routes
 
-app = FastAPI()
+app = FastAPI(
+    title="UFOs REST API",
+    description="This REST-API is used to store and retrieve UFO sightings.",
+    version="0.1.0",
+    openapi_tags=tags_routes
+)
 app.include_router(ufo)
 
-ufos_array=[]
-
-
-
-@app.get("/")
-def read_root():
-    return {"Wecome": "Welcome to my rest API"}
 
