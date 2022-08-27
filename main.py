@@ -14,4 +14,7 @@ app = FastAPI(
 )
 app.include_router(ufo)
 
+@app.get("/")
+def read_root():
+    return {"This is ufo rest API": "please visit /ufos"}
 
