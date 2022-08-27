@@ -1,3 +1,8 @@
+#************************************************************************************
+#Web Scrapper for getting information of this site from this site http://www.nuforc.org
+# in order to get all information possible of UFo sightings.
+#************************************************************************************
+
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 import re
@@ -10,13 +15,24 @@ from datetime import datetime
 URL_CONSTANT='http://www.nuforc.org'
 def request_info(url):
 # Opening connection, grabbing the page, and closing the connection
-    uClient = uReq(f"{url}/webreports/ndxevent.html")
+    uClient = uReq(url)
     page_html = uClient.read()
     uClient.close()
     # HTML parsing. Writing formatted HTML to page_soup variable.
     page_soup = soup(page_html, "html.parser")
-    return page_soup
+    return uClient,page_soup
+
+def urls_list_request(urls_list):
+    df = pd.DataFrame()
+    list_dataframes=[]
+    for x in urls_list:
+        list_dataframes.append(pd.read_html(x)[0])
+
+    df=pd.concat(list_dataframes)
+    return df
 # This function is used to find the Nth occurrence of a string.
+def close_url_connection(u_client):
+    u_client.close()
 
 def find_nth(haystack, needle, n):
     start = haystack.find(needle)
@@ -48,9 +64,13 @@ def formatting_urls(url,urls_list):
     return my_url_list[1:-1]
 
 if __name__=='__main__':
-    page_soup_obj=request_info(URL_CONSTANT)
+    base_url=f'{URL_CONSTANT}/webreports/ndxevent.html'
+    uClient,page_soup_obj=request_info(base_url)
+    close_url_connection(uClient)
     urls_list=formatting_urls(URL_CONSTANT,get_html_tag('a',page_soup_obj))
-    print(urls_list)
+    df=urls_list_request(urls_list)
+    df.to_csv('ufos.csv')
+    print(df.head())
     
 
 
