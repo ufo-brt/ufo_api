@@ -18,7 +18,7 @@ def get_all_ufos():
 
 
 @ufo.post("/ufos",response_model=Ufo,tags=["ufos"])
-def save_ufos(ufos: Ufo, status_code=201):
+def save_ufos(ufos: Ufo):
     new_ufo = dict(ufos)
     id = conn.ufo_db.ufo_history.insert_one(new_ufo).inserted_id
     return str(id)
