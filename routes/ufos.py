@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import APIRouter, HTTPException, Response,status
 from config.db import conn
 from schemas.ufo import ufoEntity, ufosEntity
@@ -11,7 +12,7 @@ ufo = APIRouter()
 ufos_array = []
 
 
-@ufo.get("/ufos",response_model=list[Ufo],tags=["ufos"])
+@ufo.get("/ufos",tags=["ufos"])
 def get_all_ufos():
     return ufosEntity(conn.ufo_db.ufo_history.find().limit(50))
 
