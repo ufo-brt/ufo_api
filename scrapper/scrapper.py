@@ -5,11 +5,7 @@
 
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
-import re
-import requests
-import lxml.html as lh
 import pandas as pd
-from datetime import datetime
 
 
 URL_CONSTANT='http://www.nuforc.org'
