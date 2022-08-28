@@ -1,4 +1,7 @@
-## This Repository is for creating information about ufos
+## RESTAPI for ufos sightings
 
-This uses pydantic models in orders to validate information comming for a request
+If you want to know more about the rest API please fill free to go to
+
+https://fastapi-ufos.herokuapp.com/docs
+
 👍 🚀
