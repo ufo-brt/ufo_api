@@ -2,6 +2,7 @@ from typing import List
 from fastapi import APIRouter, HTTPException, Response,status
 from config.db import conn
 from schemas.ufo import ufoEntity, ufosEntity
+from fastapi.encoders import jsonable_encoder
 from models.ufos import Ufo
 from uuid import uuid4 as uuid
 from bson import ObjectId
@@ -39,8 +40,9 @@ def get_ufo(ufo_id: str):
 @ufo.put('/ufos/{ufo_id}', response_model=Ufo, tags=["ufos"])
 def update_ufo(ufo_id: str, updateUfo: Ufo):
     try:
+        json_compatible_item_data = jsonable_encoder(updateUfo)
         conn.ufo_db.ufo_history.find_one_and_update(
-            {"_id": ObjectId(ufo_id)}, {'$set': updateUfo})
+            {"_id": ObjectId(ufo_id)}, {'$set': json_compatible_item_data})
         return ufoEntity(conn.ufo_db.ufo_history.find_one({"_id": ObjectId(ufo_id)}))
     except Exception as e:
         raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=str(e))
