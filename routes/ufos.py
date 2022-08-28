@@ -17,7 +17,7 @@ def get_all_ufos():
     return ufosEntity(conn.ufo_db.ufo_history.find().limit(50))
 
 
-@ufo.post("/ufos",response_model=Ufo,tags=["ufos"])
+@ufo.post("/ufos",tags=["ufos"])
 def save_ufos(ufos: Ufo):
     new_ufo = dict(ufos)
     id = conn.ufo_db.ufo_history.insert_one(new_ufo).inserted_id
