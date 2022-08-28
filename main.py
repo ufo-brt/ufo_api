@@ -1,5 +1,6 @@
 
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 from datetime import datetime
 from routes.ufos import ufo
@@ -16,5 +17,5 @@ app.include_router(ufo)
 
 @app.get("/", tags=["root"])
 def read_root():
-    return {"This is ufo rest API": "please visit /ufos"}
+    return RedirectResponse("https://fastapi-ufos.herokuapp.com/docs")
 
