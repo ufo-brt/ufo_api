@@ -1,0 +1,11 @@
+name: insert_new_sightings
+on: 
+workflow_dispatch:  
+  branches:
+    - main
+
+jobs:
+  insert_new_sightings:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
