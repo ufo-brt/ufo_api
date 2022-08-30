@@ -1,8 +1,8 @@
 name: insert_new_sightings
 on: 
-workflow_dispatch:  
-  branches:
-    - main
+  workflow_dispatch:  
+    branches:
+      - main
 
 jobs:
   insert_new_sightings:
