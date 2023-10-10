@@ -17,5 +17,5 @@ app.include_router(ufo)
 
 @app.get("/", tags=["root"])
 def read_root():
-    return RedirectResponse("https://fastapi-ufos.herokuapp.com/docs")
+    return RedirectResponse("/")
 

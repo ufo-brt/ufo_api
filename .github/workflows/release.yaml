@@ -1,0 +1,26 @@
+name: Deploy Option Valuation App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy_google_app:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    defaults:
+      run:
+        working-directory: ufo_api
+    steps:
+    - uses: 'actions/checkout@v3'
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        workload_identity_provider: 'projects/643982099481/locations/global/workloadIdentityPools/ufo-pool/providers/ufo-provider'
+        service_account: 'ufo-service-account@triviacomidacolombiana.iam.gserviceaccount.com'
+
+    - id: 'deploy'
+      uses: 'google-github-actions/deploy-appengine@v1'
