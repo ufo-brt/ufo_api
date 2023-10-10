@@ -1,4 +1,4 @@
-name: Deploy Option Valuation App
+name: Deploy UFO
 
 on:
   push:
