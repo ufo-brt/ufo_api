@@ -20,6 +20,8 @@ jobs:
       env:
         MONGO_KEY: ${{ secrets.MONGO_KEY }}
         USER_MONGO: ${{ secrets.USER_MONGO }}
+      run: |
+        echo "Setting env variables" 
     - uses: 'actions/checkout@v3'
     - id: 'auth'
       uses: 'google-github-actions/auth@v1'
