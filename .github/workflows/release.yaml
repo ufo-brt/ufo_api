@@ -8,6 +8,7 @@ on:
 jobs:
   deploy_google_app:
     runs-on: ubuntu-latest
+    environment: fastapi-ufos
     permissions:
       contents: 'read'
       id-token: 'write'
