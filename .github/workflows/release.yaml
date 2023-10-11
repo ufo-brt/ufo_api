@@ -7,7 +7,7 @@ on:
 env:
   MONGO_KEY: ${{ secrets.MONGO_KEY }}
   USER_MONGO: ${{ secrets.USER_MONGO }}
-  
+
 jobs:
   deploy_google_app:
     runs-on: ubuntu-latest
@@ -23,8 +23,8 @@ jobs:
     - id: 'auth'
       uses: 'google-github-actions/auth@v1'
       with:
-        workload_identity_provider: 'projects/643982099481/locations/global/workloadIdentityPools/ufo-pool/providers/ufo-provider'
-        service_account: 'ufo-service-account@triviacomidacolombiana.iam.gserviceaccount.com'
+        workload_identity_provider: 'projects/31271825601/locations/global/workloadIdentityPools/ufo-pool/providers/ufo-provider'
+        service_account: 'ufo-service@ufo-brt-api.iam.gserviceaccount.com'
 
     - id: 'deploy'
       uses: 'google-github-actions/deploy-appengine@v1'
