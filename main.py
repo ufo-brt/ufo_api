@@ -15,7 +15,7 @@ app = FastAPI(
 )
 app.include_router(ufo)
 
-@app.get("/", tags=["root"])
+""" @app.get("/", tags=["root"])
 def read_root():
     return RedirectResponse("/docs")
-
+ """
